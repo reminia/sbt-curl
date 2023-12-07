@@ -42,6 +42,10 @@ object CurlPlugin extends AutoPlugin {
     }
   )
 
+  override lazy val globalSettings: Seq[Def.Setting[_]] = curlSettings
+
+  override lazy val projectSettings: Seq[Def.Setting[_]] = curlTestSettings
+
 }
 
 object Curl {
