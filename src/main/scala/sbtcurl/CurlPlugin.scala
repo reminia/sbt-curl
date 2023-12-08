@@ -26,8 +26,12 @@ object CurlPlugin extends AutoPlugin {
 
   lazy val curlTestSettings: Seq[Def.Setting[_]] = Seq(
     curlTestScript := {
-      val projectDir = (LocalRootProject / baseDirectory).value / "project"
+      val base = (LocalRootProject / baseDirectory).value
+      val projectDir = base / "project"
       val files = List(
+        base / "curl.script",
+        base / "curl-test",
+        base / "curl.test",
         projectDir / "curl.script",
         projectDir / "curl-test",
         projectDir / "curl.test",
@@ -38,6 +42,8 @@ object CurlPlugin extends AutoPlugin {
       val someFile = curlTestScript.value
       if (someFile.isDefined) {
         Curl(someFile.get).foreach(println)
+      } else {
+        println("No any curl script file found!")
       }
     }
   )
@@ -58,15 +64,17 @@ object Curl {
     try {
       val (list, _) = source
         .getLines()
-        .filter(_.nonEmpty)
+        // remove empty and comment line
+        .filter(line => line.nonEmpty && !line.startsWith("#"))
         .foldRight[(List[String], List[String])](List(), List()) { case (line, (list1, list2)) =>
           if (line.dropWhile(_.isWhitespace).startsWith("curl")) {
-            val s = (list1 :: list2).mkString(System.lineSeparator())
+            val s = (line :: list2).mkString(System.lineSeparator())
             (s :: list1) -> List()
           } else {
             list1 -> (line :: list2)
           }
         }
+      list.foreach(x => println("cmd: " + x))
       list.map(cmd => Curl(cmd))
     } finally {
       source.close()

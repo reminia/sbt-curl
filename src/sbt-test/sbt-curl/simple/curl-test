@@ -1,0 +1,4 @@
+# api: https://gitlab.com/restcountries/restcountries
+curl https://restcountries.com/v3.1/currency/cop
+
+curl https://restcountries.com/v3.1/translation/germany
