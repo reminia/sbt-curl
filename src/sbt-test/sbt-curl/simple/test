@@ -1,3 +1,4 @@
+# curl a endpoint directly
 > curl https://restcountries.com/v3.1/name/deutschland
 # run curl-test script
 > curlTest
