@@ -15,7 +15,7 @@ object CurlPlugin extends AutoPlugin {
     lazy val curlTest = taskKey[Unit]("Execute curl test script")
   }
 
-  import autoImport.*
+  import autoImport._
 
   lazy val curlSettings: Seq[Def.Setting[_]] = Seq(
     curl := {
@@ -56,18 +56,18 @@ object Curl {
   def apply(file: File): Seq[String] = {
     val source = Source.fromFile(file)
     try {
-      val lines = source
+      val (list, _) = source
         .getLines()
         .filter(_.nonEmpty)
-      val (list1, _) = lines.foldRight[(List[String], List[String])](List(), List()) { case (line, (list1, list2)) =>
-        if (line.dropWhile(_.isWhitespace).startsWith("curl")) {
-          val s = (list1 :: list2).mkString(System.lineSeparator())
-          (s :: list1) -> List()
-        } else {
-          list1 -> (line :: list2)
+        .foldRight[(List[String], List[String])](List(), List()) { case (line, (list1, list2)) =>
+          if (line.dropWhile(_.isWhitespace).startsWith("curl")) {
+            val s = (list1 :: list2).mkString(System.lineSeparator())
+            (s :: list1) -> List()
+          } else {
+            list1 -> (line :: list2)
+          }
         }
-      }
-      list1.map(cmd => Curl(cmd))
+      list.map(cmd => Curl(cmd))
     } finally {
       source.close()
     }
