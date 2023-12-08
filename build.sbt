@@ -4,5 +4,7 @@ organization := "me.yceel"
 lazy val root = (project in file("."))
   .enablePlugins(SbtPlugin)
   .settings(
-    name := "sbt-curl"
+    name := "sbt-curl",
+    scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value),
+    scriptedBufferLog := false
   )

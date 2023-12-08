@@ -50,7 +50,7 @@ object CurlPlugin extends AutoPlugin {
 
 object Curl {
   def apply(cmd: String): String = {
-    cmd.!!
+    s"curl $cmd".!!
   }
 
   def apply(file: File): Seq[String] = {
