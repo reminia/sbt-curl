@@ -1,6 +1,6 @@
 # sbt-curl ![ci](https://github.com/reminia/sbt-curl/actions/workflows/ci.yml/badge.svg)
 sbt-curl is a sbt plugin to run curl commands in sbt. <br/>
-Motivation is to learn sbt by doing and then I came up this idea.
+The motivation is to learn sbt by doing and then I came up with this idea.
 
 ## Features
 * Run curl command directly in sbt, like `sbt curl www.google.com`.
