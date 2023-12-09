@@ -17,7 +17,7 @@ TBD: maybe add eDSl to support test api with curl / expect command.
 Add the plugin:
 
 ```
-addSbtPlugin("me.yceel" % "sbt-curl" % "0.1.0")
+addSbtPlugin("me.yceel" %% "sbt-curl" % "0.1.0")
 ```
 
 After that, your can:
