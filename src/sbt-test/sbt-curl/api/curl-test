@@ -1,0 +1,6 @@
+# single line curl command
+curl http://localhost:8080/ping
+
+# multiline curl command
+curl -X POST \
+http://localhost:8080/uuid
