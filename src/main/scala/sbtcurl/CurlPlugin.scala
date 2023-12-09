@@ -89,12 +89,11 @@ object Curl {
     try {
       val (list, _) = source
         .getLines()
-        // remove empty and comment line
         .filter(line => line.nonEmpty && !line.startsWith("#"))
         .foldRight[(List[String], List[String])](List(), List()) { case (line, (list1, list2)) =>
-          val _line = line.dropWhile(_.isWhitespace)
+          val _line = line.trim.stripSuffix("\\")
           if (_line.startsWith("curl")) {
-            val s = (_line :: list2).mkString(System.lineSeparator())
+            val s = (_line :: list2).mkString(" ")
             (s :: list1) -> List()
           } else {
             list1 -> (_line :: list2)
