@@ -6,5 +6,8 @@ lazy val root = (project in file("."))
   .settings(
     name := "sbt-curl",
     scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value),
-    scriptedBufferLog := false
+    scriptedBufferLog := false,
+    Test / test := {
+      scripted.toTask("").value
+    }
   )

@@ -19,4 +19,4 @@ jobs:
           cache: 'sbt'
 
       - name: Test plugin sbt-curl
-        run: sbt scripted
+        run: sbt test
