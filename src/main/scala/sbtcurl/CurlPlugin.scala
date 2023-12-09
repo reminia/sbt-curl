@@ -67,10 +67,10 @@ object Curl {
 
   implicit class AnsiLogger(log: Logger) {
     def colorInfo(msg: => String, ansi: String = ANSI_GREEN): Unit =
-      log.info(s"${ansi}$msg${ANSI_RESET}")
+      log.info(s"$ansi$msg$ANSI_RESET")
 
     def colorError(msg: => String, ansi: String = ANSI_RED): Unit =
-      log.error(s"${ansi}$msg${ANSI_RESET}")
+      log.error(s"$ansi$msg$ANSI_RESET")
 
     def info(msg: String): Unit = log.info(msg)
   }
