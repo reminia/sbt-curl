@@ -32,10 +32,10 @@ object CurlPlugin extends AutoPlugin {
       val base = (LocalRootProject / baseDirectory).value
       val projectDir = base / "project"
       val files = List(
-        base / "curl.script",
+        base / "curl-script",
         base / "curl-test",
         base / "curl.test",
-        projectDir / "curl.script",
+        projectDir / "curl-script",
         projectDir / "curl-test",
         projectDir / "curl.test",
       )
