@@ -24,7 +24,7 @@ addSbtPlugin("me.yceel" % "sbt-curl" % "0.1.0")
 ```
 
 You can:
-* run curl command directly in your sbt eval.
+* run curl command directly in your sbt REPL.
 * run `curlTest` to execute all curl commands in the curl-script. <br/>
   Curl script is a file named `curl-script` or `curl-test` under root directory
   or root/project directory.
