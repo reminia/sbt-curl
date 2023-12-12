@@ -20,7 +20,13 @@ Add the plugin:
 resolvers += Resolver.url("GitHub Package Registry", url("https://maven.pkg.github.com/reminia/_"))(
   Resolver.ivyStylePatterns
 )
-addSbtPlugin("me.yceel" % "sbt-curl" % "0.1.0")
+credentials += Credentials(
+  "GitHub Package Registry",
+  "maven.pkg.github.com",
+  System.getenv("GITHUB_REPOSITORY_OWNER"),
+  System.getenv("GITHUB_TOKEN")
+)
+addSbtPlugin("me.yceel" % "sbt-curl" % "0.1.1")
 ```
 
 You can:

@@ -1,4 +1,4 @@
-version := "0.1.1-SNAPSHOT"
+version := "0.1.1"
 organization := "me.yceel"
 
 val publishSettings = Seq(
