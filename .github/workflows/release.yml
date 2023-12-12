@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: release artifacts
-        uses:
+        uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.TAG }}
           allowUpdates: true
