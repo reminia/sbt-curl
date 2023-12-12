@@ -17,7 +17,10 @@ TBD: maybe add eDSl to support test api with curl / expect command.
 Add the plugin:
 
 ```
-addSbtPlugin("me.yceel" %% "sbt-curl" % "0.1.0")
+resolvers += Resolver.url("GitHub Package Registry", url("https://maven.pkg.github.com/reminia/_"))(
+  Resolver.ivyStylePatterns
+)
+addSbtPlugin("me.yceel" % "sbt-curl" % "0.1.0")
 ```
 
 You can:
