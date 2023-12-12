@@ -16,7 +16,7 @@ TBD: maybe add eDSl to support test api with curl / expect command.
 
 Add the plugin:
 
-```
+```scala
 resolvers += Resolver.url("GitHub Package Registry", url("https://maven.pkg.github.com/reminia/_"))(
   Resolver.ivyStylePatterns
 )
