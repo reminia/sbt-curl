@@ -1,11 +1,10 @@
 package sbtcurl
 
-import sbt._
-import sbt.Keys._
-import sbtcurl.Curl.AnsiLogger
+import sbt.*
+import sbt.Keys.*
 
 import scala.io.Source
-import scala.sys.process._
+import scala.sys.process.*
 
 object CurlPlugin extends AutoPlugin {
   override def trigger = allRequirements
@@ -16,14 +15,13 @@ object CurlPlugin extends AutoPlugin {
     lazy val curlTest = taskKey[Unit]("Execute curl test script")
   }
 
-  import autoImport._
-
+  import autoImport.*
 
   lazy val curlSettings: Seq[Def.Setting[_]] = Seq(
     curl := {
       val input = Def.spaceDelimited().parsed.mkString(" ")
       implicit val log: AnsiLogger = streams.value.log
-      log.info(Curl(input))
+      log.either(Curl(input))
     },
   )
 
@@ -45,7 +43,7 @@ object CurlPlugin extends AutoPlugin {
       val someFile = curlTestScript.value
       implicit val log: AnsiLogger = streams.value.log
       if (someFile.isDefined) {
-        Curl(someFile.get).foreach(log.info)
+        Curl(someFile.get).foreach(log.either)
       } else {
         log.colorError("No any curl script file found!")
       }
@@ -59,32 +57,20 @@ object CurlPlugin extends AutoPlugin {
 }
 
 object Curl {
-  private val ANSI_RESET = "\u001B[0m"
 
-  private val ANSI_GREEN = "\u001B[32m"
-
-  private val ANSI_RED = "\u001B[31m"
-
-  implicit class AnsiLogger(log: Logger) {
-    def colorInfo(msg: => String, ansi: String = ANSI_GREEN): Unit =
-      log.info(s"$ansi$msg$ANSI_RESET")
-
-    def colorError(msg: => String, ansi: String = ANSI_RED): Unit =
-      log.error(s"$ansi$msg$ANSI_RESET")
-
-    def info(msg: String): Unit = log.info(msg)
-  }
-
-  def apply(cmd: String)(implicit logger: AnsiLogger): String = {
+  def apply(cmd: String)(implicit logger: AnsiLogger): Either[String, String] = {
     val curl = cmd match {
       case s if s.startsWith("curl") => cmd
       case _ => s"curl $cmd"
     }
     logger.colorInfo(curl)
-    curl.!!
+    CommandParser.parse(curl) match {
+      case Right(list) => Right(Process(list).!!)
+      case Left(msg) => Left(msg)
+    }
   }
 
-  def apply(file: File)(implicit logger: AnsiLogger): Seq[String] = {
+  def apply(file: File)(implicit logger: AnsiLogger): Seq[Either[String, String]] = {
     val source = Source.fromFile(file)
     try {
       val (list, _) = source
