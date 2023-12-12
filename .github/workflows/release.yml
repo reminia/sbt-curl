@@ -26,3 +26,10 @@ jobs:
         run: sbt publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: release artifacts
+        uses:
+        with:
+          tag: ${{ env.TAG }}
+          allowUpdates: true
+
