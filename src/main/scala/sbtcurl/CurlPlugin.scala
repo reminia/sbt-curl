@@ -29,7 +29,7 @@ object CurlPlugin extends AutoPlugin {
 
   lazy val curlTestSettings: Seq[Def.Setting[_]] = Seq(
     curlTestScript := {
-      val base = (LocalRootProject / baseDirectory).value
+      val base = baseDirectory.value
       val projectDir = base / "project"
       val files = List(
         base / "curl-script",
